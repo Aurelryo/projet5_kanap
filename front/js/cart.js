@@ -267,7 +267,7 @@ const validEmail = function (email) {
 
 //validation form et panier local storage//
 let submitOrder = document.querySelector("#order")
-submitOrder.addEventListener("click", (e) => requestForm())
+submitOrder.addEventListener("click", (e) => submitForm(e))
 
 
 
@@ -290,7 +290,7 @@ function submitForm(e) {
         .then((data) => console.log(data))
 
     console.log(form.elements)
-    document.location.href = "confirmation.html";
+    //document.location.href = "confirmation.html";
 
 }
 
@@ -325,3 +325,4 @@ function getIdLocal() {
     }
     return ids
 }
+
