@@ -75,61 +75,67 @@ if (button != null) {
             altTxt: altText,
             name: kanapName
         }
-        // function saveKanap(data) {
-        localStorage.setItem(key, JSON.stringify(data))
+
+
+        let productLocalStorage = JSON.parse(localStorage.getItem(data))
+        //localStorage.setItem(key, JSON.stringify(data))
+        if (productLocalStorage) {
+            const resultFind = productLocalStorage.find(
+                (el) => el.id === id && el.color === color);
+            //Si le produit commandé est déjà dans le panier
+            if (resultFind) {
+                let newQuantite =
+                    parseInt(data.quantity) + parseInt(resultFind.quantity);
+                resultFind.quantity = newQuantite;
+                localStorage.setItem(data, JSON.stringify(productLocalStorage));
+                console.table(productLocalStorage);
+                //Si le produit commandé n'est pas dans le panier
+            } else {
+                productLocalStorage.push(data);
+                localStorage.setItem(data, JSON.stringify(productLocalStorage));
+                console.table(productLocalStorage);
+            }
+            //Si le panier est vide
+        } else {
+            productLocalStorage = [];
+            productLocalStorage.push(data);
+            localStorage.setItem(data, JSON.stringify(productLocalStorage));
+            console.table(productLocalStorage);
+
+        }
     })
 }
-       // }
 
-/* function getKanap() {
-     let kanaps = localStorage.getItem(data)
-     if (data == null) {
-         return []
-     } else {
-         return JSON.parse(data)
-     }
-     function newquantity(product) {
-         let kanap = getKanap()
-         let foundProduct = kanaps.find(p => p.id == product.id)
-         if (foundProduct != undefined) {
-             foundProduct.quantity++
-         } else {
-             product.quantity = 1
-             kanap.push(product)
-         }
-         saveKanap(data)
-     }
 
- }
+/*localStorage.setItem(key, JSON.stringify(data))
+let productInLocalStorage = JSON.parse(localStorage.getItem(data))
+newquantity(data)
 })
-}
+//}
+// }
 
-
-
-/*let productLocalStorage = JSON.parse(localStorage.get(key))
-//localStorage.setItem(key, JSON.stringify(data))
-if (productLocalStorage) {
- const resultFind = productLocalStorage.find(
-     (el) => el.id === id && el.color === color);
- //Si le produit commandé est déjà dans le panier
- if (resultFind) {
-     let newQuantite =
-         parseInt(data.quantity) + parseInt(resultFind.quantity);
-     resultFind.quantity = newQuantite;
-     localStorage.setItem(key, JSON.stringify(productLocalStorage));
-     console.table(productLocalStorage);
-     //Si le produit commandé n'est pas dans le panier
- } else {
-     productLocalStorage.push(data);
-     localStorage.setItem(key, JSON.stringify(productLocalStorage));
-     console.table(productLocalStorage);
- }
- //Si le panier est vide
+function getKanap() {
+let kanaps = localStorage.getItem(data)
+if (data == null) {
+    return []
 } else {
- productLocalStorage = [];
- productLocalStorage.push(data);
- localStorage.setItem(key, JSON.stringify(productLocalStorage));
- console.table(productLocalStorage);
- 
+    return JSON.parse(data)
 }
-})*/
+}
+function newquantity(product) {
+// let kanap = getKanap()
+console.log(product)
+let foundProduct = product.find(p => p.id === product.id && p.color === product.color)
+if (foundProduct) {
+    let newquantitys = product.quantity + foundProduct.quantity
+    console.log(newquantitys)
+} else {
+    product.quantity = 1
+    product.push(product)
+}
+localStorage.setItem(key, JSON.stringify(data))
+
+}
+}*/
+
+
