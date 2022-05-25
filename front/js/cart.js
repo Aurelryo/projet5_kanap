@@ -267,7 +267,7 @@ const validEmail = function (email) {
 
 //validation form et panier local storage//
 let submitOrder = document.querySelector("#order")
-submitOrder.addEventListener("click", (e) => submitForm(e))
+submitOrder.addEventListener("click", (e) => requestForm(e))
 
 
 
@@ -286,7 +286,7 @@ function submitForm(e) {
             "content-type": "application/json",
         }
     })
-        .then((res) => res.json())
+        .then((response) => response.json())
         .then((data) => console.log(data))
 
     console.log(form.elements)
@@ -314,6 +314,7 @@ function requestForm() {
     console.log(body)
     return body
 }
+
 function getIdLocal() {
     let idOfKanap = localStorage.length
     let ids = []
