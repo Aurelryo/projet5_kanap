@@ -1,15 +1,23 @@
-let cart = []
-localStoragepanier()
-cart.forEach((kanap) => displayItem(kanap))
+//let cart = []
+//localStoragepanier()
+//cart.forEach((kanap) => displayItem(kanap))
 
 
-function localStoragepanier() {
-    let kanapItems = localStorage.length
-    for (let i = 0; i < kanapItems; i++) {
-        let item = localStorage.getItem(localStorage.key(i))
-        let itemKanap = JSON.parse(item)
+/*function localStoragepanier() {
+    //let kanapItems = localStorage.length
+    JSON.parse(localStorage.getItem());
+    for (let i = 0; i < displayItem; i++) {
+        //let itemKanap = JSON.parse(localStorage.getItem(kanap));
+        console.table(kanap);
+        //let item = localStorage.getItem(localStorage.key(i))
+        //let itemKanap = JSON.parse(item)
         cart.push(itemKanap)
     }
+//}*/
+let productLocalStorage = localStorage.getItem(kanap);
+let kanapJso = JSON.parse(kanap)
+for (let i = 0; i < kanap.length; i++) {
+    productLocalStorage.forEach((kanap) => displayItem(kanap)[i])
 }
 
 function displayItem(kanap) {
@@ -123,6 +131,9 @@ function totalQuantity() {
     totalQuantity.textContent = total
 }
 // prix total panier//
+(`http://localhost:3000/api/products/${price}`)
+    .then((responce) => responce.json())
+    .then((res) => totalPrice(res))
 function totalPrice() {
     let total = 0
     let totalPrice = document.querySelector("#totalPrice")
@@ -267,7 +278,7 @@ const validEmail = function (email) {
 
 //validation form et panier local storage//
 let submitOrder = document.querySelector("#order")
-submitOrder.addEventListener("click", (e) => requestForm(e))
+submitOrder.addEventListener("click", (e) => submitForm(e))
 
 
 
@@ -286,7 +297,7 @@ function submitForm(e) {
             "content-type": "application/json",
         }
     })
-        .then((response) => response.json())
+        .then((res) => res.json())
         .then((data) => console.log(data))
 
     console.log(form.elements)
@@ -314,7 +325,6 @@ function requestForm() {
     console.log(body)
     return body
 }
-
 function getIdLocal() {
     let idOfKanap = localStorage.length
     let ids = []
