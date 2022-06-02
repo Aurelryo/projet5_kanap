@@ -1,24 +1,10 @@
-//let cart = []
-//localStoragepanier()
-//cart.forEach((kanap) => displayItem(kanap))
-
-
-/*function localStoragepanier() {
-    //let kanapItems = localStorage.length
-    JSON.parse(localStorage.getItem());
-    for (let i = 0; i < displayItem; i++) {
-        //let itemKanap = JSON.parse(localStorage.getItem(kanap));
-        console.table(kanap);
-        //let item = localStorage.getItem(localStorage.key(i))
-        //let itemKanap = JSON.parse(item)
-        cart.push(itemKanap)
-    }
-//}*/
-let productLocalStorage = localStorage.getItem(kanap);
-let kanapJso = JSON.parse(kanap)
-for (let i = 0; i < kanap.length; i++) {
-    productLocalStorage.forEach((kanap) => displayItem(kanap)[i])
+let cart = []
+let productLocalStorage = JSON.parse(localStorage.getItem("product"));
+for (let i = 0; i < productLocalStorage.length; i++) {
+    displayItem(productLocalStorage[i])
 }
+console.log(productLocalStorage)
+
 
 function displayItem(kanap) {
     let article = addArticle(kanap)
@@ -131,9 +117,9 @@ function totalQuantity() {
     totalQuantity.textContent = total
 }
 // prix total panier//
-(`http://localhost:3000/api/products/${price}`)
+/*fetch(`http://localhost:3000/api/products/${price}`)
     .then((responce) => responce.json())
-    .then((res) => totalPrice(res))
+    .then((res) => totalPrice(res))*/
 function totalPrice() {
     let total = 0
     let totalPrice = document.querySelector("#totalPrice")

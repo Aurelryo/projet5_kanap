@@ -77,7 +77,7 @@ if (button != null) {
         }
 
 
-        let productLocalStorage = JSON.parse(localStorage.getItem(kanap))
+        let productLocalStorage = JSON.parse(localStorage.getItem("product"))
         //localStorage.setItem(kanap, JSON.stringify(kanap))
         if (productLocalStorage) {
             const resultFind = productLocalStorage.find(
@@ -87,19 +87,19 @@ if (button != null) {
                 let newQuantite =
                     parseInt(kanap.quantity) + parseInt(resultFind.quantity);
                 resultFind.quantity = newQuantite;
-                localStorage.setItem(kanap, JSON.stringify(productLocalStorage));
+                localStorage.setItem("product", JSON.stringify(productLocalStorage));
                 console.table(productLocalStorage);
                 //Si le produit commandé n'est pas dans le panier
             } else {
                 productLocalStorage.push(kanap);
-                localStorage.setItem(kanap, JSON.stringify(productLocalStorage));
+                localStorage.setItem("product", JSON.stringify(productLocalStorage));
                 console.table(productLocalStorage);
             }
             //Si  panier est vide
         } else {
             productLocalStorage = [];
             productLocalStorage.push(kanap);
-            localStorage.setItem(kanap, JSON.stringify(productLocalStorage));
+            localStorage.setItem("product", JSON.stringify(productLocalStorage));
             console.table(productLocalStorage);
 
         }
