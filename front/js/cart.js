@@ -132,7 +132,7 @@ function totalPrice() {
 
 //modification panier//
 function upDatePaner(id, newValue, kanap) {
-    let newItems = cart.find((kanap) => kanap.id === id)
+    let newItems = productLocalStorage.find((kanap) => kanap.id === id)
     newItems.quantity = Number(newValue)
     kanap.quantity = newItems.quantity
     totalQuantity()
