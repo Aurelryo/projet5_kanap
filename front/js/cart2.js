@@ -28,7 +28,7 @@ if (productLocalStorage === null) {
                 <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
                         <p>Qté : </p>
-                        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
+                        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${productLocalStorage[i].quantity}">
                     </div>    
                     <div class="cart__item__content__settings__delete">
                         <p class="deleteItem">Supprimer</p>
@@ -38,10 +38,74 @@ if (productLocalStorage === null) {
         </article>
         `;
     }
-
     basket.innerHTML = basketProducts;
-
 }
+
+
+
+
+
+let deleteProduct = document.querySelectorAll(".deleteItem")
+console.log(deleteProduct)
+
+for (let a = 0; a > deleteProduct.length; a++) {
+    deleteProduct[a].addEventListener("click", (event) => {
+        event.preventDefault()
+        console.log(event)
+    })
+    let deleteItemById = productLocalStorage[a].id;
+    console.log("deleteItemById")
+    console.log(deleteItemById)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*//div setting quantité//
+function addSettings(kanap) {
+    let settings = document.createElement("div")
+    settings.classList.add("cart__item__content__settings")
+    addQuantitySettings(settings, kanap)
+    deleteKanap(settings, kanap)
+    return settings
+}
+function addQuantitySettings(settings, kanap) {
+    let quantity = document.createElement("div")
+    quantity.classList.add("cart__item__content__settings__quantity")
+    let p = document.createElement("p")
+    p.textContent = "Qté"
+    quantity.appendChild(p)
+
+    let input = document.createElement("input")
+    input.type = "number"
+    input.classList.add("itemQuantity")
+    input.name = ("itemquantity")
+    input.min = "1"
+    input.max = "100"
+    input.value = kanap.quantity
+    input.addEventListener("input", () => upDatePaner(kanap.id, input.value, kanap))
+    quantity.appendChild(input)
+    settings.appendChild(quantity)
+
+}*/
 
 
 
