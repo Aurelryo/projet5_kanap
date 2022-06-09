@@ -3,7 +3,7 @@
 let productLocalStorage = JSON.parse(localStorage.getItem("product"));
 console.log(productLocalStorage)
 const basket = document.querySelector("#cart__items")
-console.log(basket)
+//console.log(basket)
 //si panier est vide 
 if (productLocalStorage === null) {
     const emptyBasket = `
@@ -12,10 +12,21 @@ if (productLocalStorage === null) {
     basket.innerHTML = emptyBasket;
     //console.log("le panier est vide")
 } else {
-    let basketProducts = [];
-    for (let i = 0; i < productLocalStorage.length; i++) {
-        basketProducts = basketProducts + `
-        <article class="cart__item" data-id="${productLocalStorage[i]._id}" data-color="${productLocalStorage[i].color}">
+    fetch('http://localhost:3000/api/products')
+        .then((response) => response.json())
+        .then((kanap) => {
+            function findProduct(id) {
+                return kanap.find((product) => product._id === id)
+            }
+            // })
+            let basketProducts = [];
+
+            for (let i = 0; i < productLocalStorage.length; i++) {
+                let kanap = findProduct(productLocalStorage[i].id)
+
+                let totalPriceArticle = kanap.price * productLocalStorage[i].quantity
+                basketProducts = basketProducts + `
+        <article class="cart__item" data-id="${productLocalStorage[i].id}" data-color="${productLocalStorage[i].color}">
             <div class="cart__item__img">
                 <img src="${productLocalStorage[i].imageUrl}" alt="${productLocalStorage[i].altTxt}">
             </div>
@@ -23,7 +34,7 @@ if (productLocalStorage === null) {
                 <div class="cart__item__content__description">
                     <h2>${productLocalStorage[i].name}</h2>
                     <p>${productLocalStorage[i].color}</p>
-                    <p>42,00 €</p>
+                    <p>${totalPriceArticle} €</p>
                 </div>
                 <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -37,57 +48,35 @@ if (productLocalStorage === null) {
         </div>
         </article>
         `;
-    }
-    basket.innerHTML = basketProducts;
+            }
+
+            basket.innerHTML = basketProducts;
+        })
+
 }
 
 
-
-
-
-let deleteProduct = document.querySelectorAll(".deleteItem")
-console.log(deleteProduct)
-
-for (let a = 0; a > deleteProduct.length; a++) {
-    deleteProduct[a].addEventListener("click", (event) => {
-        event.preventDefault()
-        console.log(event)
-    })
-    let deleteItemById = productLocalStorage[a].id;
-    console.log("deleteItemById")
-    console.log(deleteItemById)
+/*(productLocalStorage === null) {
+    const emptyBasket = `
+    <div> Votre panier est vide</div>
+    `;
+    basket.innerHTML = emptyBasket;
+    //console.log("le panier est vide"*/
+function upDatePaner(id, newValue, product) {
+    let newItems = productLocalStorage.find((product) => product.id === id)
+    newItems.quantity = Number(newValue)
+    product.quantity = newItems.quantity
+    return
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*//div setting quantité//
-function addSettings(kanap) {
+function addSettings(product) {
     let settings = document.createElement("div")
     settings.classList.add("cart__item__content__settings")
     addQuantitySettings(settings, kanap)
-    deleteKanap(settings, kanap)
+    deleteKanap(settings, product)
     return settings
 }
-function addQuantitySettings(settings, kanap) {
+function addQuantitySettings(settings, product) {
     let quantity = document.createElement("div")
     quantity.classList.add("cart__item__content__settings__quantity")
     let p = document.createElement("p")
@@ -100,12 +89,40 @@ function addQuantitySettings(settings, kanap) {
     input.name = ("itemquantity")
     input.min = "1"
     input.max = "100"
-    input.value = kanap.quantity
-    input.addEventListener("input", () => upDatePaner(kanap.id, input.value, kanap))
+    input.value = product.quantity
+    input.addEventListener("input", () => upDatePaner(product.id, input.value, product))
     quantity.appendChild(input)
     settings.appendChild(quantity)
 
-}*/
+}
+
+function upDatePaner(id, newValue, product) {
+    let newItems = productLocalStorage.find((product) => product.id === id)
+    newItems.quantity = Number(newValue)
+    product.quantity = newItems.quantity
+    totalQuantity()
+    totalPrice()
+    savemodification(kanap)
+}
+*/
+
+
+let deleteProduct = document.querySelectorAll(".deleteItem")
+console.log(deleteProduct)
+
+for (let a = 0; a < deleteProduct.length; a++) {
+    console.log("lss"[a])
+    deleteProduct[a].addEventListener("click", (event) => {
+        event.preventDefault()
+        console.log(event)
+    })
+    let deleteItemById = productLocalStorage[a].id;
+    console.log("deleteItemById")
+    console.log(deleteItemById)
+}
+
+
+
 
 
 
