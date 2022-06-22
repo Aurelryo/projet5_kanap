@@ -51,43 +51,27 @@ if (productLocalStorage === null) {
             }
 
             basket.innerHTML = basketProducts;
+            quantityModif()
+            totalPrice()
         })
 
 }
 
 
 
-let input = document.querySelector("input")
-console.log("input")
-console.log(input)
-input.type = "number"
-input.classList.add("itemQuantity")
-input.name = ("itemquantity")
-input.min = "1"
-input.max = "100"
-input.value = productLocalStorage.quantity
-input.addEventListener("input", () => upDateBasket(product.id, input.value, kanap))
 
 
-function upDateBasket() {
-    let newItems = productLocalStorage.find((product) => product.id === id)
-    newItems.quantity = Number(newValue)
-    kanap.quantity = newItems.quantity
-}
-
-
-/*function quantityModif() {
-    let newQauntity = document.querySelector(".itemQuantity")
-
-    for (let j = 0; j < newQauntity.length; j++) {
-        newQauntity[j].addEventListener("change"), (ev) => {
-            ev.preventDefault();
-
-            let modifQuantt = productLocalStorage[j].quantity
-            let mdfQuat = newQauntity[j].quantity
-        }
+function quantityModif() {
+    let newQauntity = document.querySelectorAll(".itemQuantity")
+    console.log(newQauntity[0].value)
+    for (let i = 0; i < newQauntity.length; i++) {
+        newQauntity[i].addEventListener("change", () => {
+            productLocalStorage[i].quantity = newQauntity[i].value
+            console.log(productLocalStorage[i].quantity)
+            localStorage.setItem("product", JSON.stringify(productLocalStorage))
+        })
     }
-}*/
+}
 
 
 //tottal article panier//
@@ -104,6 +88,7 @@ function totalQuantity() {
 function totalPrice() {
     let total = 0
     let totalPrice = document.querySelector("#totalPrice")
+    console.log(totalPrice)
     cart.forEach((kanap) => {
         let totalKanapPrice = kanap.price * kanap.quantity
         total += totalKanapPrice
@@ -112,11 +97,7 @@ function totalPrice() {
 }
 
 
-function savemodification(kanap) {
-    let saveAddKanap = JSON.stringify(kanap)
-    let key = `${kanap.id}-${kanap.color}`
-    localStorage.setItem(key, saveAddKanap)
-}
+
 
 /*function quantityModif() {
     let newQauntity = document.querySelector(".itemQuantity")
