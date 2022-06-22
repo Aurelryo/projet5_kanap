@@ -56,62 +56,91 @@ if (productLocalStorage === null) {
 }
 
 
-/*(productLocalStorage === null) {
-    const emptyBasket = `
-    <div> Votre panier est vide</div>
-    `;
-    basket.innerHTML = emptyBasket;
-    //console.log("le panier est vide"*/
-function upDatePaner(id, newValue, product) {
+
+let input = document.querySelector("input")
+console.log("input")
+console.log(input)
+input.type = "number"
+input.classList.add("itemQuantity")
+input.name = ("itemquantity")
+input.min = "1"
+input.max = "100"
+input.value = productLocalStorage.quantity
+input.addEventListener("input", () => upDateBasket(product.id, input.value, kanap))
+
+
+function upDateBasket() {
     let newItems = productLocalStorage.find((product) => product.id === id)
     newItems.quantity = Number(newValue)
-    product.quantity = newItems.quantity
-    return
-}
-/*//div setting quantité//
-function addSettings(product) {
-    let settings = document.createElement("div")
-    settings.classList.add("cart__item__content__settings")
-    addQuantitySettings(settings, kanap)
-    deleteKanap(settings, product)
-    return settings
-}
-function addQuantitySettings(settings, product) {
-    let quantity = document.createElement("div")
-    quantity.classList.add("cart__item__content__settings__quantity")
-    let p = document.createElement("p")
-    p.textContent = "Qté"
-    quantity.appendChild(p)
-
-    let input = document.createElement("input")
-    input.type = "number"
-    input.classList.add("itemQuantity")
-    input.name = ("itemquantity")
-    input.min = "1"
-    input.max = "100"
-    input.value = product.quantity
-    input.addEventListener("input", () => upDatePaner(product.id, input.value, product))
-    quantity.appendChild(input)
-    settings.appendChild(quantity)
-
+    kanap.quantity = newItems.quantity
 }
 
-function upDatePaner(id, newValue, product) {
-    let newItems = productLocalStorage.find((product) => product.id === id)
-    newItems.quantity = Number(newValue)
-    product.quantity = newItems.quantity
-    totalQuantity()
-    totalPrice()
-    savemodification(kanap)
+
+/*function quantityModif() {
+    let newQauntity = document.querySelector(".itemQuantity")
+
+    for (let j = 0; j < newQauntity.length; j++) {
+        newQauntity[j].addEventListener("change"), (ev) => {
+            ev.preventDefault();
+
+            let modifQuantt = productLocalStorage[j].quantity
+            let mdfQuat = newQauntity[j].quantity
+        }
+    }
+}*/
+
+
+//tottal article panier//
+function totalQuantity() {
+    let total = 0
+    let totalQuantity = document.querySelector("#totalQuantity")
+    cart.forEach((productLocalStorage) => {
+        let totalQuantitys = + productLocalStorage.quantity
+        total += totalQuantitys
+    })
+    totalQuantity.textContent = total
 }
-*/
+// prix total panier//
+function totalPrice() {
+    let total = 0
+    let totalPrice = document.querySelector("#totalPrice")
+    cart.forEach((kanap) => {
+        let totalKanapPrice = kanap.price * kanap.quantity
+        total += totalKanapPrice
+    })
+    totalPrice.textContent = total
+}
+
+
+function savemodification(kanap) {
+    let saveAddKanap = JSON.stringify(kanap)
+    let key = `${kanap.id}-${kanap.color}`
+    localStorage.setItem(key, saveAddKanap)
+}
+
+/*function quantityModif() {
+    let newQauntity = document.querySelector(".itemQuantity")
+
+    for (let j = 0; j < newQauntity.length; j++) {
+        newQauntity[j].addEventListener("change"), (ev) => {
+            ev.preventDefault();
+
+            let modifQuantt = productLocalStorage[j].quantity
+            let mdfQuat = newQauntity[j].quantity
+        }
+    }
+}*/
+
+
+
+
+
 
 
 let deleteProduct = document.querySelectorAll(".deleteItem")
 console.log(deleteProduct)
 
 for (let a = 0; a < deleteProduct.length; a++) {
-    console.log("lss"[a])
     deleteProduct[a].addEventListener("click", (event) => {
         event.preventDefault()
         console.log(event)
