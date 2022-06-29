@@ -1,7 +1,7 @@
 
 
 let productLocalStorage = JSON.parse(localStorage.getItem("product"));
-console.log(productLocalStorage)
+//console.log(productLocalStorage)
 const basket = document.querySelector("#cart__items")
 //console.log(basket)
 //si panier est vide 
@@ -52,83 +52,75 @@ if (productLocalStorage === null) {
 
             basket.innerHTML = basketProducts;
             quantityModif()
-            totalPrice()
+            totalQuantityProduct()
+            //totalPrice()
+            deleteProduct()
         })
 
 }
-
-
 
 
 
 function quantityModif() {
     let newQauntity = document.querySelectorAll(".itemQuantity")
-    console.log(newQauntity[0].value)
+    //console.log(newQauntity[0].value)
     for (let i = 0; i < newQauntity.length; i++) {
         newQauntity[i].addEventListener("change", () => {
             productLocalStorage[i].quantity = newQauntity[i].value
-            console.log(productLocalStorage[i].quantity)
+            //console.log(productLocalStorage[i].quantity)
             localStorage.setItem("product", JSON.stringify(productLocalStorage))
         })
     }
 }
 
+function totalQuantityProduct() {
+    let totalQuantityBasket = []
+    for (let i = 0; i < productLocalStorage.length; i++) {
+        let totalProductsBasket = productLocalStorage[i].quantity
+        totalQuantityBasket.push(totalProductsBasket)
+        console.log(totalQuantityBasket)
+    }
 
-//tottal article panier//
-function totalQuantity() {
-    let total = 0
-    let totalQuantity = document.querySelector("#totalQuantity")
-    cart.forEach((productLocalStorage) => {
-        let totalQuantitys = + productLocalStorage.quantity
-        total += totalQuantitys
-    })
-    totalQuantity.textContent = total
+    const reducer = (accumulator, currentValue) => accumulator = + currentValue
+    const totalProd = totalQuantityBasket.reduce(reducer)
+    console.log(totalProd)
+    const quantityHtml = document.querySelector("#totalQuantity")
+    quantityHtml.textContent = totalProd
 }
-// prix total panier//
-function totalPrice() {
+
+
+//prix total panier//
+/*function totalPrice() {
     let total = 0
     let totalPrice = document.querySelector("#totalPrice")
     console.log(totalPrice)
-    cart.forEach((kanap) => {
-        let totalKanapPrice = kanap.price * kanap.quantity
+    basketProducts.forEach((kanap) => {
+        let totalKanapPrice = kanap.price * productLocalStorage[i].quantity
         total += totalKanapPrice
     })
     totalPrice.textContent = total
-}
-
-
-
-
-/*function quantityModif() {
-    let newQauntity = document.querySelector(".itemQuantity")
-
-    for (let j = 0; j < newQauntity.length; j++) {
-        newQauntity[j].addEventListener("change"), (ev) => {
-            ev.preventDefault();
-
-            let modifQuantt = productLocalStorage[j].quantity
-            let mdfQuat = newQauntity[j].quantity
-        }
-    }
 }*/
 
+//supprimer//
+function deleteProduct() {
+    let deleteProduct = document.querySelectorAll(".deleteItem")
+    console.log(deleteProduct)
 
+    for (let i = 0; i < deleteProduct.length; i++) {
+        deleteProduct[i].addEventListener("click", (event) => {
+            event.preventDefault()
+            console.log(event)
 
+            let deleteItemById = productLocalStorage[i].id;
+            console.log("deleteItemById")
+            console.log(deleteItemById)
 
-
-
-
-let deleteProduct = document.querySelectorAll(".deleteItem")
-console.log(deleteProduct)
-
-for (let a = 0; a < deleteProduct.length; a++) {
-    deleteProduct[a].addEventListener("click", (event) => {
-        event.preventDefault()
-        console.log(event)
-    })
-    let deleteItemById = productLocalStorage[a].id;
-    console.log("deleteItemById")
-    console.log(deleteItemById)
+            productLocalStorage = productLocalStorage.filter(element => element.id == deleteItemById)
+            console.log(productLocalStorage)
+            localStorage.setItem("product", JSON.stringify(productLocalStorage))
+            window.location.href = "cart.html"
+        })
+    }
 }
 
 
