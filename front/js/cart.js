@@ -117,9 +117,7 @@ function totalQuantity() {
     totalQuantity.textContent = total
 }
 // prix total panier//
-/*fetch(`http://localhost:3000/api/products/${price}`)
-    .then((responce) => responce.json())
-    .then((res) => totalPrice(res))*/
+
 function totalPrice() {
     let total = 0
     let totalPrice = document.querySelector("#totalPrice")
@@ -284,7 +282,7 @@ function submitForm(e) {
         }
     })
         .then((res) => res.json())
-        .then((data) => console.log(data))
+        .then((data) => console.log(data.orderId))
 
     console.log(form.elements)
     //document.location.href = "confirmation.html";

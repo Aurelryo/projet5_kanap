@@ -53,7 +53,7 @@ if (productLocalStorage === null) {
             basket.innerHTML = basketProducts;
             quantityModif()
             totalQuantityProduct()
-            //totalPrice()
+            totalPrice()
             deleteProduct()
         })
 
@@ -74,32 +74,33 @@ function quantityModif() {
 }
 
 function totalQuantityProduct() {
-    let totalQuantityBasket = []
-    for (let i = 0; i < productLocalStorage.length; i++) {
-        let totalProductsBasket = productLocalStorage[i].quantity
-        totalQuantityBasket.push(totalProductsBasket)
-        console.log(totalQuantityBasket)
-    }
+    let total = 0
 
-    const reducer = (accumulator, currentValue) => accumulator = + currentValue
-    const totalProd = totalQuantityBasket.reduce(reducer)
-    console.log(totalProd)
-    const quantityHtml = document.querySelector("#totalQuantity")
-    quantityHtml.textContent = totalProd
+    for (let i = 0; i < productLocalStorage.length; i++) {
+        totalQuantityBasket = + productLocalStorage[i].quantity
+        total += totalQuantityBasket
+
+        const quantityHtml = document.querySelector("#totalQuantity")
+        quantityHtml.textContent = total
+    }
+    ///console.log(totalQuantityBasket)
+
+}
+//prix total panier//
+function totalPrice() {
+    let total = 0
+    for (let i = 0; i < productLocalStorage.length; i++) {
+        let kanap = productLocalStorage[i].id
+        console.log(kanap)
+        //const totalPrice = document.querySelector("#totalPrice")
+        let totalKanapPrice = kanap.price * productLocalStorage[i].quantity
+        total += totalKanapPrice
+        const totalPricePoducts = document.querySelector("#totalPrice")
+        totalPricePoducts.textContent = total
+    }
 }
 
 
-//prix total panier//
-/*function totalPrice() {
-    let total = 0
-    let totalPrice = document.querySelector("#totalPrice")
-    console.log(totalPrice)
-    basketProducts.forEach((kanap) => {
-        let totalKanapPrice = kanap.price * productLocalStorage[i].quantity
-        total += totalKanapPrice
-    })
-    totalPrice.textContent = total
-}*/
 
 //supprimer//
 function deleteProduct() {
@@ -118,7 +119,7 @@ function deleteProduct() {
             productLocalStorage = productLocalStorage.filter(element => element.id == deleteItemById)
             console.log(productLocalStorage)
             localStorage.setItem("product", JSON.stringify(productLocalStorage))
-            window.location.href = "cart.html"
+
         })
     }
 }

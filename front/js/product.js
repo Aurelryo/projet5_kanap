@@ -70,7 +70,7 @@ if (button != null) {
         const kanap = {
             id: id,
             color: color,
-            quantity: Number(quantity),
+            quantity: parseInt(quantity),
             imageUrl: imgUrl,
             altTxt: altText,
             name: kanapName
