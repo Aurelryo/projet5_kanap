@@ -18,7 +18,7 @@ if (productLocalStorage === null) {
             function findProduct(id) {
                 return kanap.find((product) => product._id === id)
             }
-            // })
+
             let basketProducts = [];
 
             for (let i = 0; i < productLocalStorage.length; i++) {
@@ -51,9 +51,19 @@ if (productLocalStorage === null) {
             }
 
             basket.innerHTML = basketProducts;
+
+            //Prix total dans le panier//
+            let total = 0
+            for (let i = 0; i < productLocalStorage.length; i++) {
+                let kanap = findProduct(productLocalStorage[i].id)
+                console.log(kanap)
+                let totalKanapPrice = kanap.price * productLocalStorage[i].quantity
+                total += totalKanapPrice
+                const totalPricePoducts = document.querySelector("#totalPrice")
+                totalPricePoducts.textContent = total
+            }
             quantityModif()
             totalQuantityProduct()
-            totalPrice()
             deleteProduct()
         })
 
@@ -90,9 +100,8 @@ function totalQuantityProduct() {
 function totalPrice() {
     let total = 0
     for (let i = 0; i < productLocalStorage.length; i++) {
-        let kanap = productLocalStorage[i].id
+        let kanap = findProduct(productLocalStorage[i].id)
         console.log(kanap)
-        //const totalPrice = document.querySelector("#totalPrice")
         let totalKanapPrice = kanap.price * productLocalStorage[i].quantity
         total += totalKanapPrice
         const totalPricePoducts = document.querySelector("#totalPrice")
@@ -109,10 +118,10 @@ function deleteProduct() {
 
     for (let i = 0; i < deleteProduct.length; i++) {
         deleteProduct[i].addEventListener("click", (event) => {
-            event.preventDefault()
+            // event.preventDefault()
             console.log(event)
 
-            let deleteItemById = productLocalStorage[i].id;
+            let deleteItemById = productLocalStorage[i].color
             console.log("deleteItemById")
             console.log(deleteItemById)
 
