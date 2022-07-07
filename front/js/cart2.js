@@ -116,17 +116,18 @@ function deleteProduct() {
     let deleteProduct = document.querySelectorAll(".deleteItem")
     console.log(deleteProduct)
 
+
     for (let i = 0; i < deleteProduct.length; i++) {
         deleteProduct[i].addEventListener("click", (event) => {
-            // event.preventDefault()
+            event.preventDefault()
             console.log(event)
 
             let deleteItemById = productLocalStorage[i].color
-            console.log("deleteItemById")
-            console.log(deleteItemById)
+            //console.log("deleteItemById")
+            //console.log(deleteItemById)
 
-            productLocalStorage = productLocalStorage.filter(element => element.id == deleteItemById)
-            console.log(productLocalStorage)
+            productLocalStorage = productLocalStorage.filter(element => element.color !== deleteItemById)
+            // console.log(productLocalStorage)
             localStorage.setItem("product", JSON.stringify(productLocalStorage))
 
         })
@@ -215,4 +216,58 @@ const validEmail = function (email) {
 };
 
 
+//validation form et panier local storage//
+let submitOrder = document.querySelector("#order")
+submitOrder.addEventListener("click", (e) => requestForm(e))
 
+
+
+function submitForm(e) {
+
+    let body = requestForm()
+    fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+            "content-type": "application/json",
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => console.log(data.orderId))//
+
+    console.log(form.elements)
+    document.location.href = "confirmation.html";
+
+}
+
+function requestForm() {
+    let form = document.querySelector(".cart__order__form")
+    let firstName = form.elements.firstName.value
+    let lastName = form.elements.lastName.value
+    let address = form.elements.address.value
+    let city = form.elements.city.value
+    let email = form.elements.email.value
+    let body = {
+        contact: {
+            firstName: firstName,
+            lastName: lastName,
+            address: address,
+            city: city,
+            email: email
+        },
+        product: getIdLocal()
+    }
+    console.log(body)
+    return body
+}
+function getIdLocal() {
+    let idOfKanap = localStorage.length
+    let ids = []
+    for (let i = 0; i < idOfKanap; i++) {
+        let key = localStorage.key(i)
+        let id = key.split("-")[0]
+        console.log(key)
+        ids.push(id)
+    }
+    return ids
+}
