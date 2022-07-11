@@ -282,7 +282,7 @@ function submitForm(e) {
         }
     })
         .then((res) => res.json())
-        .then((data) => console.log(data.orderId))
+        .then((data) => console.log(data.orderId))//
 
     console.log(form.elements)
     //document.location.href = "confirmation.html";

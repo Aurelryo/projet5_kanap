@@ -70,19 +70,28 @@ if (productLocalStorage === null) {
 }
 
 
-
+//modification du nombre de produits
 function quantityModif() {
     let newQauntity = document.querySelectorAll(".itemQuantity")
-    //console.log(newQauntity[0].value)
+
     for (let i = 0; i < newQauntity.length; i++) {
         newQauntity[i].addEventListener("change", () => {
-            productLocalStorage[i].quantity = newQauntity[i].value
-            //console.log(productLocalStorage[i].quantity)
+            let totalQuantiti = 0
+            productLocalStorage[i].quantity = parseInt(newQauntity[i].value)
             localStorage.setItem("product", JSON.stringify(productLocalStorage))
+
+            for (let i = 0; i < productLocalStorage.length; i++) {
+                totalQuantiti += productLocalStorage[i].quantity
+                const quantityHtml = document.querySelector("#totalQuantity")// declaré en haut du code
+                quantityHtml.textContent = totalQuantiti
+                console.log(totalQuantiti)
+            }
+
+            //console.log(productLocalStorage[i].quantity)
         })
     }
 }
-
+//afficher article total du panier
 function totalQuantityProduct() {
     let total = 0
 
@@ -96,7 +105,7 @@ function totalQuantityProduct() {
     ///console.log(totalQuantityBasket)
 
 }
-//prix total panier//
+// afficher prix total panier//
 function totalPrice() {
     let total = 0
     for (let i = 0; i < productLocalStorage.length; i++) {
@@ -111,7 +120,7 @@ function totalPrice() {
 
 
 
-//supprimer//
+//supprimer produit//
 function deleteProduct() {
     let deleteProduct = document.querySelectorAll(".deleteItem")
     console.log(deleteProduct)
@@ -218,13 +227,15 @@ const validEmail = function (email) {
 
 //validation form et panier local storage//
 let submitOrder = document.querySelector("#order")
-submitOrder.addEventListener("click", (e) => requestForm(e))
+//console.log(submitOrder)
+submitOrder.addEventListener("click", (e) => submitForm(e))
 
 
 
 function submitForm(e) {
-
+    e.preventDefault(e)
     let body = requestForm()
+    console.log(body)
     fetch("http://localhost:3000/api/products/order", {
         method: "POST",
         body: JSON.stringify(body),
@@ -233,10 +244,9 @@ function submitForm(e) {
         }
     })
         .then((res) => res.json())
-        .then((data) => console.log(data.orderId))//
-
-    console.log(form.elements)
-    document.location.href = "confirmation.html";
+        .then((data) => {
+            window.location.href = "./confirmation.html?orderId=" + data.orderId;
+        })
 
 }
 
