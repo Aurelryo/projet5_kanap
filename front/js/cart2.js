@@ -3,6 +3,7 @@
 let productLocalStorage = JSON.parse(localStorage.getItem("product"));
 //console.log(productLocalStorage)
 const basket = document.querySelector("#cart__items")
+let newQauntity = document.querySelectorAll(".itemQuantity")
 //console.log(basket)
 //si panier est vide 
 if (productLocalStorage === null) {
@@ -53,14 +54,21 @@ if (productLocalStorage === null) {
             basket.innerHTML = basketProducts;
 
             //Prix total dans le panier//
-            let total = 0
+            const totalPricePoducts = document.querySelector("#totalPrice")
+            //let total = 0
             for (let i = 0; i < productLocalStorage.length; i++) {
-                let kanap = findProduct(productLocalStorage[i].id)
-                console.log(kanap)
-                let totalKanapPrice = kanap.price * productLocalStorage[i].quantity
-                total += totalKanapPrice
-                const totalPricePoducts = document.querySelector("#totalPrice")
-                totalPricePoducts.textContent = total
+                newQauntity[i].addEventListener("change", () => {
+
+
+                    let kanap = findProduct(productLocalStorage[i].id)
+                    //console.log(kanap
+                    let totalKanapPrice = kanap.price * productLocalStorage[i].quantity
+                    total += totalKanapPrice
+                    totalPricePoducts.textContent = total
+                    console.log("test")
+                })
+
+
             }
             quantityModif()
             totalQuantityProduct()
@@ -72,7 +80,7 @@ if (productLocalStorage === null) {
 
 //modification du nombre de produits
 function quantityModif() {
-    let newQauntity = document.querySelectorAll(".itemQuantity")
+    //let newQauntity = document.querySelectorAll(".itemQuantity")
 
     for (let i = 0; i < newQauntity.length; i++) {
         newQauntity[i].addEventListener("change", () => {
@@ -138,7 +146,8 @@ function deleteProduct() {
             productLocalStorage = productLocalStorage.filter(element => element.color !== deleteItemById)
             // console.log(productLocalStorage)
             localStorage.setItem("product", JSON.stringify(productLocalStorage))
-
+            alert("ce produit va etre supprimer de votre panier")
+            window.location.href = "cart.html"
         })
     }
 }
